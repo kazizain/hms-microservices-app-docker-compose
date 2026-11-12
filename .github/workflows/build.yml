@@ -1,0 +1,27 @@
+name: build-images
+on: workflow_dispatch
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: eureka-server, path: hms-app/BACKEND/Eureka-Server }
+          - { name: gatewayms, path: hms-app/BACKEND/GatewayMS }
+          - { name: userms, path: hms-app/BACKEND/UserMS }
+          - { name: profilems, path: hms-app/BACKEND/ProfileMS }
+          - { name: appointment, path: hms-app/BACKEND/Appointment }
+          - { name: pharmacy, path: hms-app/BACKEND/pharmacy }
+          - { name: media, path: hms-app/BACKEND/media }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: docker/build-push-action@v6
+        with:
+          context: ${{ matrix.path }}
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/hms-${{ matrix.name }}:v1
