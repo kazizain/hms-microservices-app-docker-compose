@@ -1,0 +1,739 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"appointment","namespace":"hms"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"appointment"}},"template":{"metadata":{"labels":{"app":"appointment"}},"spec":{"containers":[{"env":[{"name":"DB_HOST","value":"mysql"},{"name":"DB_NAME","value":"appointmentdb"},{"name":"DB_USER","value":"root"},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"hms-db"}}},{"name":"EUREKA_HOST","value":"eureka-server"},{"name":"EUREKA_INSTANCE_PREFER_IP_ADDRESS","value":"true"}],"image":"qazizain/hms-appointment:v1","name":"appointment","resources":{"limits":{"memory":"512Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}]}}}}
+    creationTimestamp: "2026-11-13T07:41:06Z"
+    generation: 3
+    name: appointment
+    namespace: hms
+    resourceVersion: "329676"
+    uid: 51a58eae-5377-44da-815a-0c22d1a1cc04
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: appointment
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-11-13T08:32:57Z"
+        labels:
+          app: appointment
+      spec:
+        containers:
+        - env:
+          - name: DB_HOST
+            value: mysql
+          - name: DB_NAME
+            value: appointmentdb
+          - name: DB_USER
+            value: root
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: hms-db
+          - name: EUREKA_HOST
+            value: eureka-server
+          - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+            value: "true"
+          image: qazizain/hms-appointment:v1
+          imagePullPolicy: Always
+          name: appointment
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-11-13T07:41:22Z"
+      lastUpdateTime: "2026-11-13T07:41:22Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-13T07:41:06Z"
+      lastUpdateTime: "2026-11-13T08:33:19Z"
+      message: ReplicaSet "appointment-68bf47b766" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    terminatingReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"eureka-server","namespace":"hms"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"eureka-server"}},"template":{"metadata":{"labels":{"app":"eureka-server"}},"spec":{"containers":[{"image":"qazizain/hms-eureka-server:v1","name":"eureka-server","ports":[{"containerPort":8761}],"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}]}}}}
+    creationTimestamp: "2026-11-12T13:29:54Z"
+    generation: 1
+    name: eureka-server
+    namespace: hms
+    resourceVersion: "22331"
+    uid: 7b06a444-f409-4a0e-9d4a-ed2726b2b4a2
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: eureka-server
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: eureka-server
+      spec:
+        containers:
+        - image: qazizain/hms-eureka-server:v1
+          imagePullPolicy: IfNotPresent
+          name: eureka-server
+          ports:
+          - containerPort: 8761
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-11-12T13:30:05Z"
+      lastUpdateTime: "2026-11-12T13:30:05Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-12T13:29:54Z"
+      lastUpdateTime: "2026-11-12T13:30:05Z"
+      message: ReplicaSet "eureka-server-7c66c7f794" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    terminatingReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"frontend","namespace":"hms"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"frontend"}},"template":{"metadata":{"labels":{"app":"frontend"}},"spec":{"containers":[{"image":"qazizain/hms-frontend:v1","imagePullPolicy":"Always","name":"frontend","ports":[{"containerPort":80}],"resources":{"limits":{"memory":"128Mi"},"requests":{"cpu":"50m","memory":"64Mi"}}}]}}}}
+    creationTimestamp: "2026-11-13T08:04:03Z"
+    generation: 1
+    name: frontend
+    namespace: hms
+    resourceVersion: "321484"
+    uid: fb931dac-221a-4ae5-8a3f-71b4e6a47176
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: frontend
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app: frontend
+      spec:
+        containers:
+        - image: qazizain/hms-frontend:v1
+          imagePullPolicy: Always
+          name: frontend
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources:
+            limits:
+              memory: 128Mi
+            requests:
+              cpu: 50m
+              memory: 64Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-11-13T08:04:10Z"
+      lastUpdateTime: "2026-11-13T08:04:10Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-13T08:04:03Z"
+      lastUpdateTime: "2026-11-13T08:04:10Z"
+      message: ReplicaSet "frontend-7596b6bcbd" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    terminatingReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"gateway","namespace":"hms"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"gateway"}},"template":{"metadata":{"labels":{"app":"gateway"}},"spec":{"containers":[{"env":[{"name":"EUREKA_HOST","value":"eureka-server"},{"name":"EUREKA_INSTANCE_PREFER_IP_ADDRESS","value":"true"}],"image":"qazizain/hms-gatewayms:v1","name":"gateway","ports":[{"containerPort":9000}],"resources":{"limits":{"memory":"512Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}]}}}}
+    creationTimestamp: "2026-11-13T07:41:06Z"
+    generation: 3
+    name: gateway
+    namespace: hms
+    resourceVersion: "325599"
+    uid: d98c1456-9043-42ac-9633-b56f8962fd22
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: gateway
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-11-13T08:18:59Z"
+        labels:
+          app: gateway
+      spec:
+        containers:
+        - env:
+          - name: EUREKA_HOST
+            value: eureka-server
+          - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+            value: "true"
+          image: qazizain/hms-gatewayms:v1
+          imagePullPolicy: Always
+          name: gateway
+          ports:
+          - containerPort: 9000
+            protocol: TCP
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-11-13T07:41:16Z"
+      lastUpdateTime: "2026-11-13T07:41:16Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-13T07:41:06Z"
+      lastUpdateTime: "2026-11-13T08:19:10Z"
+      message: ReplicaSet "gateway-77886d569f" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    terminatingReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"media","namespace":"hms"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"media"}},"template":{"metadata":{"labels":{"app":"media"}},"spec":{"containers":[{"env":[{"name":"DB_HOST","value":"mysql"},{"name":"DB_NAME","value":"mediadb"},{"name":"DB_USER","value":"root"},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"hms-db"}}},{"name":"EUREKA_HOST","value":"eureka-server"},{"name":"EUREKA_INSTANCE_PREFER_IP_ADDRESS","value":"true"}],"image":"qazizain/hms-media:v1","name":"media","resources":{"limits":{"memory":"512Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}]}}}}
+    creationTimestamp: "2026-11-13T07:41:06Z"
+    generation: 3
+    name: media
+    namespace: hms
+    resourceVersion: "329880"
+    uid: 8c99f22a-3f73-4f33-985b-fc4f6b17a756
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: media
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-11-13T08:32:58Z"
+        labels:
+          app: media
+      spec:
+        containers:
+        - env:
+          - name: DB_HOST
+            value: mysql
+          - name: DB_NAME
+            value: mediadb
+          - name: DB_USER
+            value: root
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: hms-db
+          - name: EUREKA_HOST
+            value: eureka-server
+          - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+            value: "true"
+          image: qazizain/hms-media:v1
+          imagePullPolicy: Always
+          name: media
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-11-13T07:41:22Z"
+      lastUpdateTime: "2026-11-13T07:41:22Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-13T07:41:06Z"
+      lastUpdateTime: "2026-11-13T08:33:40Z"
+      message: ReplicaSet "media-5869844887" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    terminatingReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"mysql","namespace":"hms"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"mysql"}},"strategy":{"type":"Recreate"},"template":{"metadata":{"labels":{"app":"mysql"}},"spec":{"containers":[{"env":[{"name":"MYSQL_ROOT_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"hms-db"}}},{"name":"MYSQL_DATABASE","value":"hms"}],"image":"mysql:8.0","name":"mysql","ports":[{"containerPort":3306}],"resources":{"limits":{"cpu":"1","memory":"1Gi"},"requests":{"cpu":"250m","memory":"512Mi"}},"volumeMounts":[{"mountPath":"/var/lib/mysql","name":"mysql-data"},{"mountPath":"/docker-entrypoint-initdb.d","name":"mysql-init"}]}],"volumes":[{"name":"mysql-data","persistentVolumeClaim":{"claimName":"mysql-pvc"}},{"configMap":{"name":"mysql-init"},"name":"mysql-init"}]}}}}
+    creationTimestamp: "2026-11-12T13:26:55Z"
+    generation: 1
+    name: mysql
+    namespace: hms
+    resourceVersion: "21566"
+    uid: fe818fb7-6319-4ff8-ba62-932bdd36137c
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: mysql
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: mysql
+      spec:
+        containers:
+        - env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: hms-db
+          - name: MYSQL_DATABASE
+            value: hms
+          image: mysql:8.0
+          imagePullPolicy: IfNotPresent
+          name: mysql
+          ports:
+          - containerPort: 3306
+            protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 1Gi
+            requests:
+              cpu: 250m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /var/lib/mysql
+            name: mysql-data
+          - mountPath: /docker-entrypoint-initdb.d
+            name: mysql-init
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-pvc
+        - configMap:
+            defaultMode: 420
+            name: mysql-init
+          name: mysql-init
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-11-12T13:27:21Z"
+      lastUpdateTime: "2026-11-12T13:27:21Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-12T13:26:55Z"
+      lastUpdateTime: "2026-11-12T13:27:21Z"
+      message: ReplicaSet "mysql-7647cf5989" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    terminatingReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"pharmacy","namespace":"hms"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"pharmacy"}},"template":{"metadata":{"labels":{"app":"pharmacy"}},"spec":{"containers":[{"env":[{"name":"DB_HOST","value":"mysql"},{"name":"DB_NAME","value":"pharmacydb"},{"name":"DB_USER","value":"root"},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"hms-db"}}},{"name":"EUREKA_HOST","value":"eureka-server"},{"name":"EUREKA_INSTANCE_PREFER_IP_ADDRESS","value":"true"}],"image":"qazizain/hms-pharmacy:v1","name":"pharmacy","resources":{"limits":{"memory":"512Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}]}}}}
+    creationTimestamp: "2026-11-13T07:41:06Z"
+    generation: 3
+    name: pharmacy
+    namespace: hms
+    resourceVersion: "329892"
+    uid: 5d37c438-9cf0-444d-9d81-15a5a97b3cf1
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: pharmacy
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-11-13T08:32:58Z"
+        labels:
+          app: pharmacy
+      spec:
+        containers:
+        - env:
+          - name: DB_HOST
+            value: mysql
+          - name: DB_NAME
+            value: pharmacydb
+          - name: DB_USER
+            value: root
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: hms-db
+          - name: EUREKA_HOST
+            value: eureka-server
+          - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+            value: "true"
+          image: qazizain/hms-pharmacy:v1
+          imagePullPolicy: Always
+          name: pharmacy
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-11-13T07:41:23Z"
+      lastUpdateTime: "2026-11-13T07:41:23Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-13T07:41:06Z"
+      lastUpdateTime: "2026-11-13T08:33:29Z"
+      message: ReplicaSet "pharmacy-5fff9b5467" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    terminatingReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"profilems","namespace":"hms"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"profilems"}},"template":{"metadata":{"labels":{"app":"profilems"}},"spec":{"containers":[{"env":[{"name":"DB_HOST","value":"mysql"},{"name":"DB_NAME","value":"profiledb"},{"name":"DB_USER","value":"root"},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"hms-db"}}},{"name":"EUREKA_HOST","value":"eureka-server"},{"name":"EUREKA_INSTANCE_PREFER_IP_ADDRESS","value":"true"}],"image":"qazizain/hms-profilems:v1","name":"profilems","resources":{"limits":{"memory":"512Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}]}}}}
+    creationTimestamp: "2026-11-13T07:41:06Z"
+    generation: 3
+    name: profilems
+    namespace: hms
+    resourceVersion: "329859"
+    uid: 73d2f91d-5706-416b-8d1c-a2ab114b1d79
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: profilems
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-11-13T08:32:57Z"
+        labels:
+          app: profilems
+      spec:
+        containers:
+        - env:
+          - name: DB_HOST
+            value: mysql
+          - name: DB_NAME
+            value: profiledb
+          - name: DB_USER
+            value: root
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: hms-db
+          - name: EUREKA_HOST
+            value: eureka-server
+          - name: EUREKA_INSTANCE_PREFER_IP_ADDRESS
+            value: "true"
+          image: qazizain/hms-profilems:v1
+          imagePullPolicy: Always
+          name: profilems
+          resources:
+            limits:
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-11-13T07:41:22Z"
+      lastUpdateTime: "2026-11-13T07:41:22Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-13T07:41:06Z"
+      lastUpdateTime: "2026-11-13T08:33:28Z"
+      message: ReplicaSet "profilems-5f487897f8" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    terminatingReplicas: 0
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "3"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"userms","namespace":"hms"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"userms"}},"template":{"metadata":{"labels":{"app":"userms"}},"spec":{"containers":[{"env":[{"name":"DB_HOST","value":"mysql"},{"name":"DB_NAME","value":"hms"},{"name":"DB_USER","value":"root"},{"name":"DB_PASSWORD","valueFrom":{"secretKeyRef":{"key":"password","name":"hms-db"}}},{"name":"EUREKA_HOST","value":"eureka-server"}],"image":"qazizain/hms-userms:v1","name":"userms","ports":[{"containerPort":8080}],"resources":{"limits":{"cpu":"500m","memory":"512Mi"},"requests":{"cpu":"100m","memory":"256Mi"}}}]}}}}
+    creationTimestamp: "2026-11-12T15:15:21Z"
+    generation: 3
+    name: userms
+    namespace: hms
+    resourceVersion: "329664"
+    uid: 6ecf5612-1d3e-451b-9d85-08b86c60b351
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        app: userms
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          kubectl.kubernetes.io/restartedAt: "2026-11-13T08:32:57Z"
+        labels:
+          app: userms
+      spec:
+        containers:
+        - env:
+          - name: DB_HOST
+            value: mysql
+          - name: DB_NAME
+            value: hms
+          - name: DB_USER
+            value: root
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: hms-db
+          - name: EUREKA_HOST
+            value: eureka-server
+          image: qazizain/hms-userms:v1
+          imagePullPolicy: Always
+          name: userms
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2026-11-12T15:15:35Z"
+      lastUpdateTime: "2026-11-12T15:15:35Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2026-11-12T15:15:21Z"
+      lastUpdateTime: "2026-11-13T08:33:18Z"
+      message: ReplicaSet "userms-fb59c7fc4" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 3
+    readyReplicas: 1
+    replicas: 1
+    terminatingReplicas: 0
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""

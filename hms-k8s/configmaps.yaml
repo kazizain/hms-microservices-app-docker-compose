@@ -1,0 +1,66 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    ca.crt: |
+      -----BEGIN CERTIFICATE-----
+      MIIE6TCCAtGgAwIBAgIRAJydZgnawYtM0FXoAIbSENgwDQYJKoZIhvcNAQELBQAw
+      DTELMAkGA1UEAxMCY2EwIBcNMjYxMTEyMTE1OTEyWhgPMjA1NjExMTIxMjA5MTJa
+      MA0xCzAJBgNVBAMTAmNhMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA
+      zJdO07J9afNZ8yqAzy/OVFZpxmyyfFYlgoiCpJZewM027GeQaQmpMI7nhOUAFCW6
+      QzsSys2TGkslp6uaFpjxkp+T1s4/xQ3mwXBLz5ut7eUz43FR1Tmizb8wi+uxP90s
+      BK5kADwMERBm+zpbynspY0IFeNV3PngsY618cLcB/aRd03JHFAIg03SErQSw6bWN
+      ADZ716K00I90uRtUZYB0dlnOBqacs/hfxJ+tR8q22oO3Gbi0p/+gRiGbEM05B5Cu
+      13PlpynzVoFhKMyrhWHrXJRY/we2JCh7AKdLA+usJmOVG8mVkTNOC0XIXVf187sd
+      pf1jzwD6xoKQSBtlI1vHWAa2Ayol9urvA8AM1jnjTrZQb8rvaq6Awscrc2AjxVY+
+      sG/cAZjMTxnR+uyNP/YB8m9hV8Y+BicmaZ+optdswgax1dMqrvDHZh99mjWvQ8sC
+      5HrkFZKDq1N7q1iiHittBW25VrGwPcGdYLADA6sItDVtH/IWtuJXEJiEtIrhE08n
+      7iUc2TdwKsa9c5Jy1bcD8UvP7ecd16rZdwGUPTMplK+K6J+qt5wrwYFtJU+CfWp4
+      nX47LaKlGz41j346Zxi2IVNy7QiC/aL/s/xsNoSeg8jwIbBKrZ0mB7zKVLLakVmn
+      /FnOVkG+q170oTE27t6+V92CzmzHE5jHz7K9rrQahoMCAwEAAaNCMEAwDgYDVR0P
+      AQH/BAQDAgKkMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFKvmWd6SyrTwjJkk
+      uuNG0RddeLigMA0GCSqGSIb3DQEBCwUAA4ICAQCRcbxhyHFiwp5sbgB7kczGoubA
+      7CUxXsNYvnphn5d5LFAtx5indyAASGINpXSvX6kOeHainiS/J+fvisON8YIlkOuy
+      jSTCh8jRGiS9IFyhd/fhyLoW2aJj1HjF/oebuyb28yftoJMqhIzT2QPVy6BDZYx3
+      BxfDfpaFsRz7ZGmD70IVHUUTa0FbxyFURUs/wjLbLPZGFayxKe43LswXVEyrm6q2
+      LtzrYFegM9kA778TbAQh6OqbWs7zUVT3w28xRrX0azNs224hs0qTz0ELjaFIX2wh
+      LpTF99WbL+woXCfOaq5kL7jhD23j5jET1RpTK0GQc8lk2ThVJDQW7xDdcysNRK8v
+      xV7kHfengisplRnjvHsMkBjZ+E7yBlQBevdQsotAMIjO2rWUJnE2GgOKA0zhXIjo
+      AfqZfOqwTBxW54oG9Yp2dwudDSExO9Z5cOLeJtwBoneb+CoZEndcEP/XP1dwGfH5
+      YtJag0MwBAeGtSzFwfqSdrWxoavvw8MyISqv4Pm2akPrUFwX9AEI6pDyFW/5+HTD
+      +HKqrSXCfG2v8h/zm5OLLt52JsYAKnNp0OU50cH3+/Ra3cDjjIemWCPEAGAUlnG2
+      SvAo9g7F25B/N5BUKAVqk07gm6qBtCFr8y4M7rH7xhTQ2Wtyr0ktynUQghZxfHyY
+      5jEAQbecZJbrIbAwIA==
+      -----END CERTIFICATE-----
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubernetes.io/description: Contains a CA bundle that can be used to verify the
+        kube-apiserver when using internal endpoints such as the internal service
+        IP or kubernetes.default.svc. No other usage is guaranteed across distributions
+        of Kubernetes clusters.
+    creationTimestamp: "2026-11-12T13:23:34Z"
+    name: kube-root-ca.crt
+    namespace: hms
+    resourceVersion: "20500"
+    uid: 7733260e-2d3b-4821-bdb4-9e45b6c2e719
+- apiVersion: v1
+  data:
+    init.sql: |
+      CREATE DATABASE IF NOT EXISTS appointmentdb;
+      CREATE DATABASE IF NOT EXISTS profiledb;
+      CREATE DATABASE IF NOT EXISTS pharmacydb;
+      CREATE DATABASE IF NOT EXISTS mediadb;
+  kind: ConfigMap
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","data":{"init.sql":"CREATE DATABASE IF NOT EXISTS appointmentdb;\nCREATE DATABASE IF NOT EXISTS profiledb;\nCREATE DATABASE IF NOT EXISTS pharmacydb;\nCREATE DATABASE IF NOT EXISTS mediadb;\n"},"kind":"ConfigMap","metadata":{"annotations":{},"name":"mysql-init","namespace":"hms"}}
+    creationTimestamp: "2026-11-12T13:26:55Z"
+    name: mysql-init
+    namespace: hms
+    resourceVersion: "21399"
+    uid: 93307c74-d14b-4984-86f9-c825b947237b
+kind: List
+metadata:
+  resourceVersion: ""
