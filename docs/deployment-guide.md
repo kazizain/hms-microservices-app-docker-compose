@@ -7,15 +7,21 @@ It covers two deployment options:
 1. Local deployment using Docker Compose.
 2. Cloud deployment using Microsoft Azure Kubernetes Service (AKS).
 
+This repository is a maintained fork of the original HMS project. The Azure deployment was completed as a hands-on learning exercise to understand containerization, CI/CD, Kubernetes orchestration, and cloud deployment.
+
+---
+
 ## Project Architecture
 
-| Component | Technology | Port |
+| Component | Technology | Container Port |
 |---|---|---:|
 | Eureka Server | Spring Boot | 8761 |
 | API Gateway | Spring Cloud Gateway | 9000 |
 | UserMS, ProfileMS, Appointment, Pharmacy, Media | Spring Boot | 8080 |
 | Frontend | React (Vite) + Nginx | 80 |
 | Database | MySQL 8.0 | 3306 |
+
+**Note:** The frontend container uses port 80. For the local Docker Compose setup, the frontend is accessed through `http://localhost:5173`, as configured in the Compose file.
 
 ---
 
@@ -221,6 +227,8 @@ kubectl apply -f frontend.yaml
 
 The MySQL initialization configuration creates the required application databases.
 
+**Note:** These manifests were initially created in Azure Cloud Shell under `~/hms-k8s`. Their availability in this GitHub repository depends on whether they have subsequently been added to the repository.
+
 ### Step 7: Configure Frontend and CORS
 
 After deploying the Gateway and Frontend, their public IP addresses were used for application communication.
@@ -243,6 +251,12 @@ After committing these changes, the GitHub Actions workflow was executed again t
 Because the deployment reused the `v1` image tag, `imagePullPolicy: Always` and deployment restarts were used to pull the updated images.
 
 ### Step 8: Verify the Deployment
+
+Check the Kubernetes nodes:
+
+```bash
+kubectl get nodes
+```
 
 Check the Kubernetes pods:
 
@@ -289,6 +303,27 @@ The browser test confirmed that registration, login and doctor profile update we
 
 ---
 
+## Deployment Evidence
+
+Screenshots captured during the Azure AKS deployment are maintained in the `docs/screenshots/` directory.
+
+The evidence covers the following areas:
+
+| Screenshot | Description |
+|---|---|
+| `01-aks-cluster-overview.png` | Azure AKS cluster overview |
+| `02-aks-node-pool.png` | AKS node pool configuration |
+| `03-kubernetes-workloads.png` | Kubernetes nodes, pods and deployments |
+| `04-kubernetes-services.png` | Kubernetes services and external IP addresses |
+| `05-github-actions.png` | GitHub Actions image build workflow |
+| `06-dockerhub-images.png` | Published Docker Hub images |
+| `07-application-login.png` | Application registration and login |
+| `08-doctor-profile-update.png` | Doctor profile update verification |
+
+These screenshots serve as evidence of the deployment and testing activities performed during the project.
+
+---
+
 ## Troubleshooting and Lessons Learned
 
 | Issue | Resolution |
@@ -303,6 +338,32 @@ The browser test confirmed that registration, login and doctor profile update we
 
 ---
 
+## Azure Resource Cleanup
+
+The AKS deployment was created for hands-on learning and practice.
+
+After completing the deployment and verification activities, the Azure resources can be removed to avoid ongoing infrastructure charges.
+
+To remove the complete deployment, delete the resource group:
+
+```bash
+az group delete --name hms-rg --yes --no-wait
+```
+
+Verify that the resource group has been deleted:
+
+```bash
+az group exists --name hms-rg
+```
+
+A `false` response indicates that the resource group no longer exists.
+
+**Important:** Deleting the resource group removes the Azure resources contained within it. Confirm that you no longer need the cluster, disks, public IPs or other resources before proceeding. Separately created resources outside the resource group are not deleted by this command.
+
+The deployment guide and screenshots are maintained in GitHub so the learning work and deployment process remain documented even after the Azure infrastructure is removed.
+
+---
+
 ## Important Notes
 
 - Replace placeholder passwords with your own secure values.
@@ -310,6 +371,7 @@ The browser test confirmed that registration, login and doctor profile update we
 - The Docker image tag used during this deployment was `v1`.
 - The AKS deployment was completed and tested as a learning project.
 - Azure public IP addresses used during testing are deployment-specific and may no longer be active.
+- The Azure infrastructure may be deleted after testing to avoid ongoing costs.
 
 ## Acknowledgement
 
