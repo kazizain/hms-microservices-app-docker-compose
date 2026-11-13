@@ -14,6 +14,7 @@ jobs:
           - { name: appointment, path: hms-app/BACKEND/Appointment }
           - { name: pharmacy, path: hms-app/BACKEND/pharmacy }
           - { name: media, path: hms-app/BACKEND/media }
+          - { name: frontend, path: hms-app/FRONTEND/hms }
     steps:
       - uses: actions/checkout@v4
       - uses: docker/login-action@v3
