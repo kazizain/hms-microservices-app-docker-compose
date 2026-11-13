@@ -42,6 +42,64 @@ The AKS deployment was verified with 2 Ready nodes and 9/9 healthy application d
 
 The environment is a learning/test deployment. Azure resources may be stopped or deleted to manage cloud costs.
 
+## Architecture
+
+The application follows a containerized microservices architecture deployed on Azure Kubernetes Service (AKS).
+
+mermaid
+flowchart TD
+    A[Developer] --> B[GitHub Repository]
+    B --> C[GitHub Actions]
+    C --> D[Build Docker Images]
+    D --> E[Docker Hub]
+    E --> F[Azure Kubernetes Service]
+
+    subgraph AKS[Azure AKS - HMS Namespace]
+        F --> G[Frontend - LoadBalancer]
+        F --> H[API Gateway - LoadBalancer]
+
+        G --> H
+        H --> I[Eureka Server]
+
+        I --> J[UserMS]
+        I --> K[ProfileMS]
+        I --> L[Appointment]
+        I --> M[Pharmacy]
+        I --> N[Media]
+
+        J --> O[(MySQL)]
+        K --> O
+        L --> O
+        M --> O
+        N --> O
+
+        O --> P[Persistent Volume Claim]
+    end
+
+    G --> Q[Browser]
+</pre>
+
+### Deployment Evidence
+
+The `docs/` directory contains deployment documentation and supporting screenshots.
+
+The project deployment was verified through:
+
+- Two AKS worker nodes in Ready state.
+- Nine application deployments available.
+- Nine application pods running.
+- Frontend and API Gateway exposed through Azure LoadBalancer services.
+- MySQL persistent volume claim successfully Bound.
+
+### Kubernetes Configuration
+
+See the [`hms-k8s/`](./hms-k8s/) directory for the Kubernetes deployment manifests.
+
+### Deployment Documentation
+
+See the [`docs/`](./docs/) directory for deployment guides and screenshots.
+
+
 ## Documentation
 
 Deployment guide and screenshots are available in the `docs/` directory.
@@ -51,3 +109,4 @@ Deployment guide and screenshots are available in the `docs/` directory.
 Original application and Docker Compose setup:
 
 https://github.com/Ashir-Qayyum/hms-microservices-app-docker-compose
+
