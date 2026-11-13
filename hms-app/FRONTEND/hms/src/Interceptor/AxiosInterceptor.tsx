@@ -1,6 +1,6 @@
 import axios, { type InternalAxiosRequestConfig } from 'axios'
 const axiosInstance = axios.create({
-    baseURL: "http://localhost:9000"
+    baseURL: "http://20.239.225.142:9000"
     //baseURL: "https://hms-gateway-service.livelycoast-b05a0b25.uaenorth.azurecontainerapps.io"
 })
 
