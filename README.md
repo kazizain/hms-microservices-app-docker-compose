@@ -1,29 +1,53 @@
 # HMS Microservices on Azure AKS
 
-I deployed this Hospital Management System (Spring Boot microservices + React + MySQL)
-on Azure Kubernetes Service (AKS) as a learning project.
+I deployed this Hospital Management System (Spring Boot microservices + React + MySQL) on Azure Kubernetes Service (AKS) as a hands-on cloud and DevOps learning project.
 
-**Flow:** GitHub Actions -> Docker Hub -> AKS -> Browser
+**Architecture Flow:** GitHub Actions → Docker Hub → Azure AKS → Browser
 
-**What I did**
-- Created an AKS cluster (2 nodes, Standard_D2as_v5)
-- Built 8 Docker images with GitHub Actions and pushed them to Docker Hub
-- Deployed MySQL, Eureka, API Gateway, 5 backend services and the React frontend
-- Used Kubernetes Secrets for the database password
-- Exposed the gateway and frontend with LoadBalancer services
-- Fixed CORS errors in the gateway and in 5 backend services
+## What I Did
 
-**Problems I solved**
-- B-series node size not allowed in the system node pool
-- ACR Tasks blocked, so images are built with GitHub Actions
-- CORS errors (gateway and each service have their own CORS config)
-- Old image reused because the tag stayed v1 (fixed with imagePullPolicy: Always)
+- Created an Azure Kubernetes Service (AKS) cluster with 2 nodes (Standard_D2as_v5).
+- Built 8 application Docker images using GitHub Actions and pushed them to Docker Hub.
+- Deployed MySQL, Eureka Server, API Gateway, 5 backend microservices, and React frontend.
+- Configured Kubernetes Deployments, Services, ConfigMaps, Secrets, and Persistent Volume Claims.
+- Exposed the API Gateway and frontend using Azure LoadBalancer services.
+- Configured database credentials using Kubernetes Secrets.
+- Resolved CORS issues across the gateway and 5 backend services.
 
-**Files**
-- `k8s/` Kubernetes YAML files
-- `.github/workflows/build.yml` image build workflow
-- `docs/` deployment guide and screenshots
+## Problems I Solved
 
-The test deployment was deleted to avoid cost. IPs in the code (`52.246.137.53`, `20.239.225.142`) were from that deployment.
+- B-series VM size was not allowed for the AKS system node pool.
+- Azure Container Registry Tasks were unavailable, so I moved image builds to GitHub Actions.
+- Resolved CORS errors in the gateway and individual backend services.
+- Fixed stale Docker image issues by using `imagePullPolicy: Always` and updating image tags.
 
-Original application and docker-compose setup: https://github.com/Ashir-Qayyum/hms-microservices-app-docker-compose
+## Kubernetes Deployment
+
+The Kubernetes deployment configuration is maintained in the `k8s/` directory.
+
+- Kubernetes Deployments and Services
+- ConfigMaps and database initialization configuration
+- Persistent Volume Claim for MySQL
+- Namespace configuration
+
+## CI/CD
+
+- GitHub Actions workflow: `.github/workflows/build.yml`
+- Docker images published to Docker Hub.
+- Kubernetes deployment performed on Azure AKS.
+
+## Deployment Status
+
+The AKS deployment was verified with 2 Ready nodes and 9/9 healthy application deployments during the latest verification.
+
+The environment is a learning/test deployment. Azure resources may be stopped or deleted to manage cloud costs.
+
+## Documentation
+
+Deployment guide and screenshots are available in the `docs/` directory.
+
+## Original Application
+
+Original application and Docker Compose setup:
+
+https://github.com/Ashir-Qayyum/hms-microservices-app-docker-compose
